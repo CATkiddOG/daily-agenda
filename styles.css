@@ -1,0 +1,240 @@
+:root {
+  font-family: "Comic Sans MS", "Trebuchet MS", system-ui, sans-serif;
+  color: #1f2a44;
+  background: #f5f8ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.app-header {
+  background: linear-gradient(120deg, #72d7ff, #9cf7c6);
+  border-radius: 18px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.subhead {
+  margin-top: 0.4rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.mode-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.badge.kid { background: #d6f7df; }
+.badge.parent { background: #ffe9b8; }
+
+button,
+input {
+  font-size: 1rem;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  background: #4b7bff;
+  color: white;
+  font-weight: 700;
+}
+
+button.secondary {
+  background: #e6ecff;
+  color: #1f2a44;
+}
+
+.task-list,
+.reward-list {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.task-item,
+.reward-item {
+  border: 2px solid #dde6ff;
+  border-radius: 12px;
+  padding: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.task-main {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.task-time {
+  font-size: 0.92rem;
+  color: #4f6188;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.task-form {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.task-form label {
+  display: grid;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 2px solid #cdd8ff;
+  border-radius: 10px;
+}
+
+.stat-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.85rem;
+  color: #4f6188;
+}
+
+strong {
+  font-size: 1.4rem;
+}
+
+.helper-text {
+  margin-top: 0.6rem;
+  color: #4f6188;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.pin-dialog {
+  border: none;
+  border-radius: 14px;
+  padding: 1rem;
+  width: min(380px, 94vw);
+}
+
+.dialog-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.error {
+  color: #d12a2a;
+  margin-top: 0.6rem;
+}
+
+.completed {
+  opacity: 0.66;
+}
+
+.reward-item.unlocked {
+  border-color: #5ccd82;
+  background: #eefff3;
+}
+
+.celebration {
+  position: fixed;
+  inset: auto 1rem 1rem 1rem;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  background: #202a44;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  animation: pop 0.8s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-actions {
+    width: 100%;
+  }
+
+  .task-actions button {
+    flex: 1;
+  }
+}
