@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Agenda Stars</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <h1>🌟 Daily Agenda Stars</h1>
+          <p class="subhead">Build routines, earn stars, unlock rewards.</p>
+        </div>
+        <div class="mode-controls">
+          <span id="modeBadge" class="badge kid">Kid Mode</span>
+          <button id="openParentBtn" class="secondary">Parent Mode</button>
+          <button id="exitParentBtn" class="secondary hidden">Back to Kid</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <article class="card stats">
+          <h2>Progress</h2>
+          <div class="stat-grid">
+            <div><span class="label">⭐ Stars</span><strong id="starCount">0</strong></div>
+            <div><span class="label">🔥 Daily Streak</span><strong id="dailyStreak">0</strong></div>
+            <div><span class="label">📅 Weekly Streak</span><strong id="weeklyStreak">0</strong></div>
+          </div>
+          <p id="nextReward" class="helper-text"></p>
+        </article>
+
+        <article class="card reward-card">
+          <h2>Milestone Rewards</h2>
+          <ul id="rewardList" class="reward-list"></ul>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>Today&apos;s Tasks</h2>
+        <ul id="taskList" class="task-list"></ul>
+        <p id="emptyState" class="helper-text hidden">No tasks yet. Parent can add tasks in Parent Mode.</p>
+      </section>
+
+      <section id="parentPanel" class="card hidden" aria-hidden="true">
+        <h2>Parent Controls</h2>
+        <form id="taskForm" class="task-form">
+          <label>
+            Task name
+            <input id="taskName" type="text" maxlength="60" required placeholder="Brush teeth" />
+          </label>
+          <label>
+            Reminder time
+            <input id="taskTime" type="time" required />
+          </label>
+          <label>
+            Reward for next 10-star milestone
+            <input id="rewardText" type="text" maxlength="80" placeholder="Pick a weekend movie" />
+          </label>
+          <button type="submit">Add task</button>
+        </form>
+        <p class="helper-text">Only parents can add/edit tasks and milestone rewards.</p>
+      </section>
+
+      <dialog id="pinDialog" class="pin-dialog">
+        <form method="dialog" id="pinForm">
+          <h3>Enter Parent PIN</h3>
+          <p class="helper-text">Default PIN is <strong>1234</strong>. Change it in Parent Mode.</p>
+          <input id="pinInput" type="password" inputmode="numeric" maxlength="6" pattern="\d{4,6}" required />
+          <div class="dialog-actions">
+            <button value="cancel" class="secondary">Cancel</button>
+            <button value="submit">Unlock</button>
+          </div>
+          <p id="pinError" class="error hidden">Incorrect PIN, try again.</p>
+        </form>
+      </dialog>
+
+      <section id="pinSettings" class="card hidden" aria-hidden="true">
+        <h2>Parent Security</h2>
+        <form id="pinChangeForm" class="task-form">
+          <label>
+            New PIN (4-6 digits)
+            <input id="newPin" type="password" inputmode="numeric" pattern="\d{4,6}" required />
+          </label>
+          <button type="submit">Update PIN</button>
+        </form>
+      </section>
+
+      <div id="celebration" class="celebration hidden" role="status" aria-live="polite"></div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
