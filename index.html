@@ -8,6 +8,40 @@
   </head>
   <body>
     <main class="app-shell">
+
+      <section id="authScreen" class="card auth-screen">
+        <h2>Create an Account to Start</h2>
+        <p class="helper-text">Kids create a kid account. Parents can sign up with email or Google account.</p>
+        <div class="auth-grid">
+          <form id="kidSignupForm" class="task-form auth-form">
+            <h3>👧 Kid Sign Up</h3>
+            <label>Name <input id="kidName" type="text" required /></label>
+            <label>Username <input id="kidUsername" type="text" required /></label>
+            <label>Password <input id="kidPassword" type="password" required /></label>
+            <button type="submit">Create Kid Account</button>
+          </form>
+
+          <form id="parentEmailSignupForm" class="task-form auth-form">
+            <h3>🧑 Parent Sign Up (Email)</h3>
+            <label>Name <input id="parentName" type="text" required /></label>
+            <label>Email <input id="parentEmail" type="email" required /></label>
+            <label>Password <input id="parentPassword" type="password" required /></label>
+            <label>Parent PIN <input id="parentPinSetup" type="password" pattern="\d{4,6}" required /></label>
+            <button type="submit">Create Parent Account</button>
+            <button id="googleSignupBtn" type="button" class="secondary">Continue with Google</button>
+          </form>
+
+          <form id="loginForm" class="task-form auth-form">
+            <h3>🔐 Log In</h3>
+            <label>Username or Email <input id="loginId" type="text" required /></label>
+            <label>Password <input id="loginPassword" type="password" required /></label>
+            <button type="submit">Log In</button>
+            <button id="googleLoginBtn" type="button" class="secondary">Log In with Google</button>
+          </form>
+        </div>
+        <p id="authMessage" class="helper-text"></p>
+      </section>
+
       <header class="app-header">
         <div>
           <h1>🌟 Daily Agenda Stars</h1>
@@ -17,6 +51,8 @@
           <span id="modeBadge" class="badge kid">Kid Mode</span>
           <button id="openParentBtn" class="secondary">Parent Mode</button>
           <button id="exitParentBtn" class="secondary hidden">Back to Kid</button>
+          <span id="userBadge" class="helper-text"></span>
+          <button id="logoutBtn" class="secondary hidden">Log out</button>
         </div>
       </header>
 
@@ -38,29 +74,63 @@
       </section>
 
       <section class="card">
-        <h2>Today&apos;s Tasks</h2>
+        <h2>Today&apos;s Daily Agenda Tasks</h2>
         <ul id="taskList" class="task-list"></ul>
         <p id="emptyState" class="helper-text hidden">No tasks yet. Parent can add tasks in Parent Mode.</p>
       </section>
 
       <section id="parentPanel" class="card hidden" aria-hidden="true">
-        <h2>Parent Controls</h2>
+        <h2>Parent Daily Agenda Controls</h2>
         <form id="taskForm" class="task-form">
-          <label>
-            Task name
-            <input id="taskName" type="text" maxlength="60" required placeholder="Brush teeth" />
+          <label>Task name <input id="taskName" type="text" maxlength="60" required placeholder="Brush teeth" /></label>
+          <label>Daily reminder time <input id="taskTime" type="time" required /></label>
+          <label>Daily category
+            <select id="taskCategory">
+              <option value="morning">🌞 Morning Routine</option>
+              <option value="school">🏫 School Prep</option>
+              <option value="health">🪥 Health & Hygiene</option>
+              <option value="chores">🧹 Chores</option>
+              <option value="homework">📚 Homework</option>
+              <option value="play">⚽ Play & Exercise</option>
+              <option value="bedtime">🌙 Bedtime</option>
+            </select>
           </label>
-          <label>
-            Reminder time
-            <input id="taskTime" type="time" required />
-          </label>
-          <label>
-            Reward for next 10-star milestone
-            <input id="rewardText" type="text" maxlength="80" placeholder="Pick a weekend movie" />
-          </label>
-          <button type="submit">Add task</button>
+          <label>Reward for next 10-star milestone <input id="rewardText" type="text" maxlength="80" placeholder="Pick a weekend movie" /></label>
+          <button type="submit">Add daily task</button>
         </form>
-        <p class="helper-text">Only parents can add/edit tasks and milestone rewards.</p>
+      </section>
+
+      <section id="calendarPanel" class="card hidden" aria-hidden="true">
+        <h2>Parent Calendar (Separate from Daily Agenda)</h2>
+        <p class="helper-text">Create one-time calendar reminders like Soccer Practice, Meeting, Biking, etc.</p>
+
+        <form id="calendarEventForm" class="task-form">
+          <label>Event title <input id="eventTitle" type="text" maxlength="80" required placeholder="Soccer Practice" /></label>
+          <label>Category
+            <select id="eventCategory">
+              <option value="soccer">⚽ Soccer Practice</option>
+              <option value="meeting">🗓️ Meeting</option>
+              <option value="biking">🚴 Biking</option>
+              <option value="playdate">🧸 Playdate</option>
+              <option value="music">🎵 Music Lesson</option>
+              <option value="homework">📘 Homework Club</option>
+              <option value="food">🍽️ Eating Outside</option>
+              <option value="other">✨ Other</option>
+            </select>
+          </label>
+          <label>Date <input id="eventDate" type="date" required /></label>
+          <label>Start time <input id="eventTime" type="time" required /></label>
+          <label>End time <input id="eventEndTime" type="time" required /></label>
+          <button type="submit">Add calendar event bubble</button>
+        </form>
+
+        <div class="calendar-toolbar">
+          <button id="prevMonthBtn" class="secondary" type="button">◀</button>
+          <strong id="calendarMonthLabel"></strong>
+          <button id="nextMonthBtn" class="secondary" type="button">▶</button>
+        </div>
+        <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Parent calendar"></div>
+        <div id="calendarDayDetails" class="calendar-day-details"></div>
       </section>
 
       <dialog id="pinDialog" class="pin-dialog">
@@ -79,10 +149,7 @@
       <section id="pinSettings" class="card hidden" aria-hidden="true">
         <h2>Parent Security</h2>
         <form id="pinChangeForm" class="task-form">
-          <label>
-            New PIN (4-6 digits)
-            <input id="newPin" type="password" inputmode="numeric" pattern="\d{4,6}" required />
-          </label>
+          <label>New PIN (4-6 digits) <input id="newPin" type="password" inputmode="numeric" pattern="\d{4,6}" required /></label>
           <button type="submit">Update PIN</button>
         </form>
       </section>
